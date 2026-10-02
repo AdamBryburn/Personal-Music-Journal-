@@ -1,9 +1,1 @@
-{
-  "name": "Album Journal",
-  "short_name": "Album Journal",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#111116",
-  "theme_color": "#111116"
-}
+{"name":"Album Journal","short_name":"Album Journal","start_url":"./","scope":"./","display":"standalone","background_color":"#111116","theme_color":"#111116"}
