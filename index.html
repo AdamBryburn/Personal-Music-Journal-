@@ -1,97 +1,42 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111116">
-<link rel="manifest" href="manifest.webmanifest">
-<title>Album Journal</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111116"><link rel="manifest" href="manifest.webmanifest"><title>Bryburn</title>
 <style>
-:root{color-scheme:dark;--bg:#111116;--panel:#20202a;--line:#393946;--text:#f7f4fc;--muted:#aaa6b6;--accent:#cba9ff}
-*{box-sizing:border-box}body{margin:0;padding:20px 15px;background:var(--bg);color:var(--text);font:16px system-ui;max-width:850px;margin:auto}
-header,.head{display:flex;justify-content:space-between;align-items:center;gap:10px}h1{font-size:26px;margin:0}h2{font-size:19px}p,#hint,.artist,.small{color:var(--muted);font-size:13px}
-button,input,textarea,select{font:inherit}button{border:0;border-radius:12px;background:var(--accent);color:#21162d;font-weight:700;padding:11px 14px}
-input,textarea,select{background:#17171e;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;width:100%}
-.search{display:flex;gap:8px;margin:18px 0 8px}.search input{min-width:0}
-.results,.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0}
-.result{display:flex;align-items:center;gap:9px;background:var(--panel);color:var(--text);text-align:left;border:1px solid var(--line);padding:8px}
-.result img{width:64px;height:64px;object-fit:cover;border-radius:7px}.result strong{font-size:13px;display:block}.result span{font-size:11px;color:var(--muted);display:block;margin-top:4px}
-.album{min-width:0;cursor:pointer}.cover{aspect-ratio:1;background:var(--panel);border-radius:9px;overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover}
-.albumtitle{font-size:13px;font-weight:700;margin-top:6px;overflow-wrap:anywhere}.artist{margin-top:3px}.rating{color:#f5ce75;font-size:12px}
-.filters{display:flex;gap:6px;margin:10px 0}.filters button{font-size:12px;padding:8px;background:var(--panel);color:var(--text)}.filters .active{background:var(--accent);color:#21162d}
-.empty{grid-column:1/-1;padding:25px;text-align:center;color:var(--muted);background:var(--panel);border-radius:14px;line-height:1.5}
-dialog{width:calc(100% - 20px);max-width:500px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:16px}dialog::backdrop{background:#000b}
-.field{margin:12px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
-.buttons{display:flex;gap:8px}.buttons button{flex:1}.secondary{background:#33333e;color:white}
-.coverpreview{width:82px;height:82px;object-fit:cover;border-radius:8px}.foot{text-align:center;color:var(--muted);font-size:11px;margin:30px 0}
-@media(min-width:600px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}.results{grid-template-columns:repeat(3,minmax(0,1fr))}}
-</style>
-</head>
+:root{color-scheme:dark;--bg:#111116;--panel:#20202a;--line:#393946;--text:#f7f4fc;--muted:#aaa6b6;--accent:#cba9ff;--accent2:#8f70c9}
+*{box-sizing:border-box}body{margin:0;padding:18px 14px 30px;background:var(--bg);color:var(--text);font:16px system-ui,-apple-system,sans-serif;max-width:980px;margin:auto}button,input,textarea,select{font:inherit}button{border:0;border-radius:12px;background:var(--accent);color:#21162d;font-weight:700;padding:11px 14px;cursor:pointer}button:disabled{opacity:.5;cursor:default}input,textarea,select{background:#17171e;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;width:100%}
+header,.head{display:flex;justify-content:space-between;align-items:center;gap:10px}h1{font-size:28px;margin:0;letter-spacing:-.5px}h2{font-size:19px;margin:0 0 8px}p,#hint,.artist,.small{color:var(--muted);font-size:13px}.tag{display:inline-block;font-size:10px;color:#d9ccf2;background:#312c3c;border-radius:6px;padding:2px 6px;margin-left:4px;text-transform:uppercase;letter-spacing:.3px}
+.search{position:relative;display:flex;gap:8px;margin:18px 0 8px}.search input{min-width:0}.suggestions{position:absolute;z-index:20;top:52px;left:0;right:72px;background:#1b1b23;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 12px 30px #0008}.suggestion{display:flex;align-items:center;gap:10px;width:100%;border-radius:0;background:transparent;color:var(--text);text-align:left;border-bottom:1px solid #2d2d37;padding:10px 12px}.suggestion:last-child{border-bottom:0}.suggestion:hover{background:#282833}.suggestion .sicon{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#333}.suggestion strong{display:block;font-size:13px}.suggestion span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.artistchips{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 14px}.artistchip{background:#292632;color:#eee;border:1px solid #413b4d;padding:8px 10px;font-size:12px}.artistchip:hover{background:#373044}.results,.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0}.result{display:flex;align-items:center;gap:9px;background:var(--panel);color:var(--text);text-align:left;border:1px solid var(--line);padding:8px}.result img{width:64px;height:64px;object-fit:cover;border-radius:7px;background:#30303a}.result strong{font-size:13px;display:block}.result span{font-size:11px;color:var(--muted);display:block;margin-top:4px}.result .rmeta{margin-top:3px}
+.album{min-width:0;cursor:pointer}.cover{aspect-ratio:1;background:var(--panel);border-radius:9px;overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover}.albumtitle{font-size:13px;font-weight:700;margin-top:6px;overflow-wrap:anywhere}.artist{margin-top:3px;cursor:pointer}.artist:hover{text-decoration:underline;color:var(--text)}.rating{color:#f5ce75;font-size:12px}.filters{display:flex;gap:6px;margin:10px 0}.filters button{font-size:12px;padding:8px;background:var(--panel);color:var(--text)}.filters .active{background:var(--accent);color:#21162d}.empty{grid-column:1/-1;padding:25px;text-align:center;color:var(--muted);background:var(--panel);border-radius:14px;line-height:1.5}.foot{text-align:center;color:var(--muted);font-size:11px;margin:30px 0}
+.artistbar{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin:15px 0}.artistbar .back{background:transparent;color:var(--muted);padding:4px 0;margin-bottom:8px}.artistbar h2{margin-bottom:3px}.artistmeta{color:var(--muted);font-size:12px}.catalogHead{margin-top:18px}
+dialog{width:calc(100% - 20px);max-width:520px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:16px}dialog::backdrop{background:#000b}.field{margin:12px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.buttons{display:flex;gap:8px}.buttons button{flex:1}.secondary{background:#33333e;color:white}.coverpreview{width:82px;height:82px;object-fit:cover;border-radius:8px;background:#30303a}.loading{text-align:center;color:var(--muted);padding:20px;grid-column:1/-1}.source{font-size:10px;color:#7f7b89;margin-top:10px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}.results{grid-template-columns:repeat(3,minmax(0,1fr))}.suggestions{right:80px}}
+</style></head>
 <body>
-<header><div><h1>Album Journal</h1><p>Your music, your little corner.</p></div><button id="manual">＋ Add</button></header>
-<div class="search"><input id="q" placeholder="Search an album or artist…"><button id="find">Find</button></div>
-<div id="hint">Search an album or artist and we'll find the cover for you.</div>
-<div id="results" class="results"></div>
-<div class="head"><h2>My albums</h2><span id="count" class="small">0 albums</span></div>
-<div class="filters"><button class="active" data-filter="all">All</button><button data-filter="favorites">♥ Favorites</button><button data-filter="recent">Recently added</button></div>
-<div id="albums" class="grid"></div>
-<div class="foot">Private journal data is stored on this device.</div>
+<header><div><h1>Bryburn</h1><p>My personal album journal.</p></div><button id="manual">＋ Add</button></header>
+<div class="search"><input id="q" autocomplete="off" placeholder="Search an album or artist…"><button id="find">Find</button><div id="suggestions" class="suggestions" hidden></div></div>
+<div id="artistchips" class="artistchips"></div><div id="hint">Albums and full EPs only — no singles or individual songs.</div><div id="results" class="results"></div>
+<section id="catalog" hidden></section>
+<section id="library"><div class="head"><h2>My albums</h2><span id="count" class="small">0 albums</span></div><div class="filters"><button class="active" data-filter="all">All</button><button data-filter="favorites">♥ Favorites</button><button data-filter="recent">Recently added</button></div><div id="albums" class="grid"></div></section>
+<div class="foot">Your journal is stored privately on this device.</div>
 
-<dialog id="dlg">
-<form id="form">
-<div class="head"><h2 id="dlgtitle">Add album</h2><button type="button" class="secondary" id="close">✕</button></div>
-<p><img id="preview" class="coverpreview" alt=""><br><strong id="pTitle"></strong><br><span id="pArtist" class="small"></span></p>
-<div class="field"><label>Album</label><input id="title" required></div>
-<div class="field"><label>Artist</label><input id="artist" required></div>
-<div class="field"><label>Rating</label><select id="rating"><option value="0">Not rated</option><option value="1">½ star</option><option value="2">★</option><option value="3">★½</option><option value="4">★★</option><option value="5">★★½</option><option value="6">★★★</option><option value="7">★★★½</option><option value="8">★★★★</option><option value="9">★★★★½</option><option value="10">★★★★★</option></select></div>
-<div class="field"><label>Date listened</label><input id="date" type="date"></div>
-<div class="field"><label><input id="fav" type="checkbox" style="width:auto"> Favorite</label></div>
-<div class="field"><label>Notes / review</label><textarea id="notes" rows="3" placeholder="What did you think?"></textarea></div>
-<div class="buttons"><button type="submit">Save album</button><button type="button" class="secondary" id="del" hidden>Delete</button></div>
-</form>
-</dialog>
+<dialog id="dlg"><form id="form"><div class="head"><h2 id="dlgtitle">Add album</h2><button type="button" class="secondary" id="close">✕</button></div><p><img id="preview" class="coverpreview" alt=""><br><strong id="pTitle"></strong><br><span id="pArtist" class="small"></span></p><div class="field"><label>Album / EP</label><input id="title" required></div><div class="field"><label>Artist</label><input id="artist" required></div><div class="field"><label>Rating</label><select id="rating"><option value="0">Not rated</option><option value="1">½ star</option><option value="2">★</option><option value="3">★½</option><option value="4">★★</option><option value="5">★★½</option><option value="6">★★★</option><option value="7">★★★½</option><option value="8">★★★★</option><option value="9">★★★★½</option><option value="10">★★★★★</option></select></div><div class="field"><label>Date listened</label><input id="date" type="date"></div><div class="field"><label><input id="fav" type="checkbox" style="width:auto"> Favorite</label></div><div class="field"><label>Notes / review</label><textarea id="notes" rows="3" placeholder="What did you think?"></textarea></div><div class="buttons"><button type="submit">Save album</button><button type="button" class="secondary" id="del" hidden>Delete</button></div></form></dialog>
 
 <script>
-const $=x=>document.getElementById(x);
-let albums=[];try{albums=JSON.parse(localStorage.getItem('albumJournalV3')||'[]')}catch(e){}
-let filter='all',editing=null,selected=null;
-function save(){localStorage.setItem('albumJournalV3',JSON.stringify(albums));render()}
+const $=x=>document.getElementById(x),today=()=>new Date().toISOString().slice(0,10);
+let albums=[];try{albums=JSON.parse(localStorage.getItem('albumJournalV4')||localStorage.getItem('albumJournalV3')||'[]')}catch(e){}
+let filter='all',editing=null,selected=null,suggestTimer=null,searchToken=0;
+function persist(){localStorage.setItem('albumJournalV4',JSON.stringify(albums));render()}
 function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function render(){
- let a=[...albums];if(filter==='favorites')a=a.filter(x=>x.fav);if(filter==='recent')a.sort((x,y)=>y.created-x.created);
- $('count').textContent=albums.length+' album'+(albums.length===1?'':'s');
- $('albums').innerHTML=a.length?a.map(x=>`<div class="album" data-id="${x.id}"><div class="cover">${x.image?`<img loading="lazy" src="${esc(x.image)}">`:''}</div><div class="albumtitle">${esc(x.title)} ${x.fav?'♥':''}</div><div class="artist">${esc(x.artist)}</div>${x.rating?`<div class="rating">${'★'.repeat(Math.floor(x.rating/2))}${x.rating%2?'½':''}</div>`:''}</div>`).join(''):'<div class="empty">Your collection starts here. Search for an album above, tap a match, and save it to your journal. 🎧</div>';
- document.querySelectorAll('.album').forEach(el=>el.onclick=()=>open(albums.find(x=>x.id===el.dataset.id)))
-}
-function open(x=null){
- editing=x?.id||null;selected=x?{...x}:null;$('dlgtitle').textContent=x?'Edit album':'Add album';
- $('title').value=x?.title||'';$('artist').value=x?.artist||'';$('rating').value=x?.rating||0;$('date').value=x?.date||new Date().toISOString().slice(0,10);$('fav').checked=!!x?.fav;$('notes').value=x?.notes||'';
- $('preview').src=x?.image||'';$('pTitle').textContent=x?.title||'Album artwork';$('pArtist').textContent=x?.artist||'';$('del').hidden=!x;$('dlg').showModal()
-}
-async function search(){
- let q=$('q').value.trim();if(!q){$('hint').textContent='Type an album or artist name first.';return}
- $('hint').textContent='Searching albums…';$('results').innerHTML='';
- try{
-  const r=await fetch('https://itunes.apple.com/search?term='+encodeURIComponent(q)+'&entity=album&limit=18');
-  const d=await r.json(),items=(d.results||[]).filter(x=>x.collectionName&&x.artistName);
-  if(!items.length){$('hint').textContent='No matches. Try a different spelling or artist name.';return}
-  $('hint').textContent='Tap the album you want to add.';
-  $('results').innerHTML=items.map((x,i)=>`<button class="result" data-i="${i}"><img src="${esc((x.artworkUrl100||'').replace('100x100bb','600x600bb'))}"><span><strong>${esc(x.collectionName)}</strong>${esc(x.artistName)} · ${(x.releaseDate||'').slice(0,4)}</span></button>`).join('');
-  document.querySelectorAll('.result').forEach((el,i)=>el.onclick=()=>{
-   const x=items[i],image=(x.artworkUrl100||'').replace('100x100bb','600x600bb'),old=albums.find(a=>a.collectionId===x.collectionId);
-   open(old||{title:x.collectionName,artist:x.artistName,image,collectionId:x.collectionId,rating:0,fav:false,date:new Date().toISOString().slice(0,10),notes:''})
-  })
- }catch(e){$('hint').textContent='Search could not connect. Check your internet and try again.'}
-}
-$('find').onclick=search;$('q').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();search()}};
-$('manual').onclick=()=>open();$('close').onclick=()=>$('dlg').close();
-$('form').onsubmit=e=>{e.preventDefault();let old=albums.find(a=>a.id===editing);
- let x={id:editing||('id'+Date.now()),title:$('title').value.trim(),artist:$('artist').value.trim(),image:selected?.image||old?.image||'',collectionId:selected?.collectionId||old?.collectionId||null,rating:+$('rating').value,date:$('date').value,fav:$('fav').checked,notes:$('notes').value.trim(),created:old?.created||Date.now()};
- albums=editing?albums.map(a=>a.id===editing?x:a):[x,...albums];save();$('dlg').close();$('results').innerHTML='';$('hint').textContent='Saved! Search for another album whenever you like.'
-};
-$('del').onclick=()=>{if(editing&&confirm('Delete this album?')){albums=albums.filter(a=>a.id!==editing);save();$('dlg').close()}};
-document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));render()});
-if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-render();
-</script>
-</body></html>
+function stars(n){return n?'★'.repeat(Math.floor(n/2))+(n%2?'½':''):''}
+function render(){let a=[...albums];if(filter==='favorites')a=a.filter(x=>x.fav);if(filter==='recent')a.sort((x,y)=>y.created-x.created);$('count').textContent=albums.length+' album'+(albums.length===1?'':'s');$('albums').innerHTML=a.length?a.map(x=>`<div class="album" data-id="${esc(x.id)}"><div class="cover">${x.image?`<img loading="lazy" src="${esc(x.image)}" onerror="this.style.display='none'">`:''}</div><div class="albumtitle">${esc(x.title)} ${x.fav?'♥':''}</div><div class="artist" data-artist="${esc(x.artist)}">${esc(x.artist)}</div>${x.rating?`<div class="rating">${stars(x.rating)}</div>`:''}</div>`).join(''):'<div class="empty">Your collection starts here. Search for an album above, tap a match, and save it. 🎧</div>';document.querySelectorAll('.album').forEach(el=>{el.onclick=e=>{if(e.target.closest('.artist'))return;open(albums.find(x=>x.id===el.dataset.id))}});document.querySelectorAll('.album .artist').forEach(el=>el.onclick=e=>{e.stopPropagation();showArtist(el.dataset.artist)})}
+function open(x=null){editing=x?.id||null;selected=x?{...x}:null;$('dlgtitle').textContent=x?'Edit album':'Add album';$('title').value=x?.title||'';$('artist').value=x?.artist||'';$('rating').value=x?.rating||0;$('date').value=x?.date||today();$('fav').checked=!!x?.fav;$('notes').value=x?.notes||'';$('preview').src=x?.image||'';$('pTitle').textContent=x?.title||'Album artwork';$('pArtist').textContent=x?.artist||'';$('del').hidden=!x;$('dlg').showModal()}
+function hideSuggestions(){ $('suggestions').hidden=true;$('suggestions').innerHTML=''}
+async function artistSuggest(q){if(q.length<2){hideSuggestions();return}const token=++searchToken;try{const r=await fetch('https://itunes.apple.com/search?term='+encodeURIComponent(q)+'&entity=musicArtist&limit=8');const d=await r.json();if(token!==searchToken)return;const seen=new Set(),items=(d.results||[]).filter(x=>x.artistName&&!seen.has(x.artistName)&&seen.add(x.artistName));if(!items.length){hideSuggestions();return}$('suggestions').innerHTML=items.map(x=>`<button class="suggestion" data-name="${esc(x.artistName)}"><div class="sicon">♪</div><div><strong>${esc(x.artistName)}</strong><span>Artist · browse albums & EPs</span></div></button>`).join('');$('suggestions').hidden=false;document.querySelectorAll('.suggestion').forEach(b=>b.onclick=()=>{hideSuggestions();$('q').value=b.dataset.name;showArtist(b.dataset.name)})}catch(e){hideSuggestions()}}
+$('q').addEventListener('input',()=>{clearTimeout(suggestTimer);const q=$('q').value.trim();suggestTimer=setTimeout(()=>artistSuggest(q),280)});$('q').addEventListener('keydown',e=>{if(e.key==='Escape')hideSuggestions();if(e.key==='Enter'){e.preventDefault();hideSuggestions();search()}});document.addEventListener('click',e=>{if(!e.target.closest('.search'))hideSuggestions()});
+async function search(){let q=$('q').value.trim();if(!q){$('hint').textContent='Type an album or artist name first.';return}hideSuggestions();$('hint').textContent='Searching albums and EPs…';$('artistchips').innerHTML='';$('results').innerHTML='';$('catalog').hidden=true;$('library').hidden=false;try{const [mb,it]=await Promise.all([fetch('https://musicbrainz.org/ws/2/release-group/?query='+encodeURIComponent(q)+'&type=album%7Cep&fmt=json&limit=25').then(r=>r.json()),fetch('https://itunes.apple.com/search?term='+encodeURIComponent(q)+'&entity=album&limit=25').then(r=>r.json())]);const mbItems=(mb['release-groups']||[]).filter(x=>['Album','EP'].includes(x['primary-type']));const itItems=(it.results||[]).filter(x=>x.collectionName&&x.artistName);const map=new Map();mbItems.forEach(x=>map.set((x.title+'|'+(x['artist-credit']?.[0]?.name||'')).toLowerCase(),{mbid:x.id,title:x.title,artist:x['artist-credit']?.map(c=>c.name).join('')||'',date:x['first-release-date']||'',type:x['primary-type'],image:`https://coverartarchive.org/release-group/${x.id}/front-500`,source:'MusicBrainz'}));itItems.forEach(x=>{const key=(x.collectionName+'|'+x.artistName).toLowerCase();if(!map.has(key))map.set(key,{collectionId:x.collectionId,title:x.collectionName,artist:x.artistName,date:(x.releaseDate||'').slice(0,4),type:'Album',image:(x.artworkUrl100||'').replace('100x100bb','600x600bb'),source:'Apple'});else{const v=map.get(key);if(!v.image)v.image=(x.artworkUrl100||'').replace('100x100bb','600x600bb')}});const items=[...map.values()].slice(0,30);const artistNames=[...new Set(itItems.slice(0,8).map(x=>x.artistName))].slice(0,5);$('artistchips').innerHTML=artistNames.map(a=>`<button class="artistchip" data-name="${esc(a)}">Artist: ${esc(a)}</button>`).join('');document.querySelectorAll('.artistchip').forEach(b=>b.onclick=()=>showArtist(b.dataset.name));if(!items.length){$('hint').textContent='No album or full-EP matches found. Try the artist name or a slightly different spelling.';return}$('hint').textContent='Albums and full EPs only. Tap one to rate it.';$('results').innerHTML=items.map((x,i)=>`<button class="result" data-i="${i}"><img src="${esc(x.image||'')}" onerror="this.style.display='none'"><span><strong>${esc(x.title)} <span class="tag">${esc(x.type||'Album')}</span></strong>${esc(x.artist)}<span class="rmeta">${esc((x.date||'').slice(0,4))}</span></span></button>`).join('');document.querySelectorAll('.result').forEach((el,i)=>el.onclick=()=>{const x=items[i],old=albums.find(a=>(x.mbid&&a.mbid===x.mbid)||(x.collectionId&&a.collectionId===x.collectionId));open(old||{title:x.title,artist:x.artist,image:x.image||'',mbid:x.mbid||null,collectionId:x.collectionId||null,rating:0,fav:false,date:today(),notes:''})})}catch(e){console.error(e);$('hint').textContent='Search could not connect. Check your internet and try again.'}}
+async function showArtist(name){hideSuggestions();$('q').value=name;$('library').hidden=true;$('results').innerHTML='';$('artistchips').innerHTML='';$('catalog').hidden=false;$('catalog').innerHTML=`<div class="artistbar"><button class="back" id="back">← Back to my albums</button><h2>${esc(name)}</h2><div class="artistmeta">Albums and full EPs</div></div><div id="catalogGrid" class="grid"><div class="loading">Loading releases…</div></div>`;$('back').onclick=()=>{$('catalog').hidden=true;$('library').hidden=false;$('q').value='';render()};try{const ar=await fetch('https://musicbrainz.org/ws/2/artist/?query='+encodeURIComponent('artist:"'+name+'"')+'&fmt=json&limit=8').then(r=>r.json());let artists=ar.artists||[];artists.sort((a,b)=>(b.score||0)-(a.score||0));const a=artists.find(x=>x.name.toLowerCase()===name.toLowerCase())||artists[0];if(!a)throw Error('artist not found');const d=await fetch('https://musicbrainz.org/ws/2/release-group/?artist='+a.id+'&type=album%7Cep&fmt=json&limit=100').then(r=>r.json());let items=(d['release-groups']||[]).filter(x=>['Album','EP'].includes(x['primary-type']));items.sort((x,y)=>(y['first-release-date']||'').localeCompare(x['first-release-date']||''));$('catalogGrid').innerHTML=items.length?items.map(x=>`<div class="album" data-mbid="${esc(x.id)}"><div class="cover"><img loading="lazy" src="https://coverartarchive.org/release-group/${x.id}/front-500" onerror="this.onerror=null;this.src='';this.style.display='none'"></div><div class="albumtitle">${esc(x.title)}</div><div class="artist">${esc((x['first-release-date']||'').slice(0,4))} · ${esc(x['primary-type'])}</div></div>`).join(''):'<div class="empty">No album/EP releases found for this artist.</div>';document.querySelectorAll('#catalogGrid .album').forEach(el=>el.onclick=async()=>{const x=items.find(i=>i.id===el.dataset.mbid);const existing=albums.find(a=>a.mbid===x.id);if(existing){open(existing);return}open({title:x.title,artist:name,image:`https://coverartarchive.org/release-group/${x.id}/front-500`,mbid:x.id,rating:0,fav:false,date:today(),notes:''})})}catch(e){console.error(e);$('catalogGrid').innerHTML='<div class="empty">Could not load this artist right now. Try again in a moment.</div>'}}
+$('find').onclick=search;$('manual').onclick=()=>open();$('close').onclick=()=>$('dlg').close();$('form').onsubmit=e=>{e.preventDefault();let old=albums.find(a=>a.id===editing);let x={id:editing||('id'+Date.now()),title:$('title').value.trim(),artist:$('artist').value.trim(),image:selected?.image||old?.image||'',mbid:selected?.mbid||old?.mbid||null,collectionId:selected?.collectionId||old?.collectionId||null,rating:+$('rating').value,date:$('date').value,fav:$('fav').checked,notes:$('notes').value.trim(),created:old?.created||Date.now()};albums=editing?albums.map(a=>a.id===editing?x:a):[x,...albums];persist();$('dlg').close();$('results').innerHTML='';$('hint').textContent='Saved!'};$('del').onclick=()=>{if(editing&&confirm('Delete this album?')){albums=albums.filter(a=>a.id!==editing);persist();$('dlg').close()}};document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));render()});if('serviceWorker'in navigator&&location.protocol.startsWith('http'))addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));render();
+</script></body></html>
